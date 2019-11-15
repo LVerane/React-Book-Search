@@ -45,17 +45,26 @@ class Books extends Component {
     });
   };
 
+  // handleFormSubmit = event => {
+  //   event.preventDefault();
+  //   if (this.state.title && this.state.authors) {
+  //     API.saveBook({
+  //       title: this.state.title,
+  //       authors: this.state.authors,
+  //       description: this.state.description
+  //     })
+  //       .then(res => this.loadBooks())
+  //       .catch(err => console.log(err));
+  //   }
+  // };
+
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title && this.state.authors) {
-      API.saveBook({
-        title: this.state.title,
-        authors: this.state.authors,
-        description: this.state.description
+    API.getRecipes(this.state.title)
+      .then(res => {
+        console.log(res.data);
       })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
-    }
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -101,7 +110,7 @@ class Books extends Component {
               <List>
                 {this.state.books.map(book => (
                   <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
+                    <Link to={"/books/saved/" + book._id}>
                       <strong>
                         {book.title} by {book.authors}
                       </strong>

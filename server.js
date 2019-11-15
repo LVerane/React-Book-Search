@@ -5,6 +5,10 @@ const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+//move this to wherever it should be
+// const dotenv = require("dotenv").config();
+// console.log(process.env.REACT_APP_GOOGLE_API_KEY);
+
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

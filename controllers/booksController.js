@@ -1,4 +1,5 @@
 const db = require("../models");
+const axios = require("axios");
 
 // Defining methods for the booksController
 module.exports = {
@@ -28,5 +29,14 @@ module.exports = {
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  findRecipes: function(req, res) {
+    // console.log(req);
+    axios
+      .get("http://www.recipepuppy.com/api/", { params: req.query })
+      .then(({ data: { results } }) => res.json(results))
+      .catch(err => res.status(422).json(err));
   }
+  // router.get("/recipes", (req, res) => {
+  // });
 };
