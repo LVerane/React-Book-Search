@@ -58,11 +58,71 @@ class Books extends Component {
   //   }
   // };
 
+  // handleFormSubmit = event => {
+  //   event.preventDefault();
+  //   API.getRecipes(this.state.title)
+  //     .then(res => {
+  //       console.log(res.data);
+  //     })
+  //     .catch(err => console.log(err));
+  // };
+
   handleFormSubmit = event => {
     event.preventDefault();
-    API.getRecipes(this.state.title)
+    const fixedTitle = this.state.title.replace(/\s/g, "+");
+    API.getGoogleBooks(fixedTitle)
       .then(res => {
-        console.log(res.data);
+        // console.log(
+        const superArr = [];
+        for (let i = 0; i < res.data.length; i++) {
+          superArr.push({});
+          console.log("i is " + i);
+          superArr[i].authors =
+            res.data[i].volumeInfo.authors.join(", ") || "data not provided";
+          superArr[i].title =
+            res.data[i].volumeInfo.title || "data not provided";
+          // superArr[i].categories =
+          //   res.data[i].volumeInfo.categories || "data not provided";
+          superArr[i].description =
+            res.data[i].volumeInfo.description || "data not provided";
+          superArr[i].image =
+            res.data[i].volumeInfo.imageLinks.thumbnail || "data not provided";
+          superArr[i].info =
+            res.data[i].volumeInfo.infoLink || "data not provided";
+          console.log(superArr);
+        }
+        // console.log(res.data[0].volumeInfo);
+        console.log("---------");
+        // const bookData = res.data.map(book => [
+        //   // { authors: book.volumeInfo.authors },
+        //   // { title: book.volumeInfo.title },
+        //   // { categories: book.volumeInfo.categories },
+        //   // { description: book.volumeInfo.description },
+        //   // { thumbnail: book.volumeInfo.imageLinks.thumbnail },
+        //   // { infoLink: book.volumeInfo.infoLink }
+        //   book.volumeInfo.authors,
+        //   book.volumeInfo.title,
+        //   book.volumeInfo.categories,
+        //   book.volumeInfo.description,
+        //   book.volumeInfo.imageLinks.thumbnail,
+        //   book.volumeInfo.infoLink
+        // ]);
+        // console.log(bookData);
+        //this works now, not sure if I still want it
+        const test = { ...superArr };
+        console.log(test);
+        // bookData.forEach(element => {
+        //   Object.assign({}, element);
+        // });
+        // console.log(bookData);
+        // const test2 = { ...bookData[0] };
+        // const test2 =
+        // bookData.forEach(element => console.log(element[0]));
+        // console.log(test2);
+        // console.log(bookData[0]);
+        this.setState({ books: superArr });
+        // );
+        // console.log(res.data);
       })
       .catch(err => console.log(err));
   };
@@ -95,7 +155,7 @@ class Books extends Component {
                 placeholder="description (Optional)"
               />
               <FormBtn
-                disabled={!(this.state.authors && this.state.title)}
+                // disabled={!(this.state.authors && this.state.title)}
                 onClick={this.handleFormSubmit}
               >
                 Submit Book
@@ -108,8 +168,8 @@ class Books extends Component {
             </Jumbotron>
             {this.state.books.length ? (
               <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
+                {this.state.books.map((book, index) => (
+                  <ListItem key={book._id || index}>
                     <Link to={"/books/saved/" + book._id}>
                       <strong>
                         {book.title} by {book.authors}

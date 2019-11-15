@@ -15,5 +15,6 @@ router
   .delete(booksController.remove);
 
 router.route("/recipes").get(booksController.findRecipes);
+router.route("/googlebooks").get(booksController.findGoogleBooks);
 
 module.exports = router;
