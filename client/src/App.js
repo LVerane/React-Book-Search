@@ -13,7 +13,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Books} />
           <Route exact path="/books" component={Books} />
-          <Route exact path="/books/saved/:id" component={Saved} />
+          <Route exact path="/books/saved" component={Saved} />
           <Route component={NoMatch} />
         </Switch>
         {/* <Books /> */}

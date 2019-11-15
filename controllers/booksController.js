@@ -1,6 +1,6 @@
 const db = require("../models");
 const axios = require("axios");
-const dotenv = require("dotenv").config();
+// const dotenv = require("dotenv").config();
 // console.log(process.env.REACT_APP_GOOGLE_API_KEY);
 // Defining methods for the booksController
 module.exports = {
@@ -46,7 +46,7 @@ module.exports = {
         // "https://www.googleapis.com/books/v1/volumes?q=" +
         //   req.query.q +
         //   "&key=" +
-        "https://www.googleapis.com/books/v1/volumes?q=intitle:" + req.query.q
+        "https://www.googleapis.com/books/v1/volumes?q=" + req.query.q
         // "https://www.googleapis.com/books/v1/volumes?q=harry+potter&key=" +
         // process.env.REACT_APP_GOOGLE_API_KEY
       )

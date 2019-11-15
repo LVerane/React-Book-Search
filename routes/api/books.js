@@ -7,12 +7,10 @@ router
   .get(booksController.findAll)
   .post(booksController.create);
 
-// Matches with "/api/books/:id"
-router
-  .route("/saved/:id")
-  .get(booksController.findById)
-  .put(booksController.update)
-  .delete(booksController.remove);
+// Matches with "/api/books/saved"
+router.route("/saved").get(booksController.findAll); //was findById bfore
+// .put(booksController.update)
+// .delete(booksController.remove);
 
 router.route("/recipes").get(booksController.findRecipes);
 router.route("/googlebooks").get(booksController.findGoogleBooks);
