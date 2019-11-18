@@ -10,7 +10,7 @@ router
 // Matches with "/api/books/saved"
 router.route("/saved").get(booksController.findAll); //was findById bfore
 // .put(booksController.update)
-// .delete(booksController.remove);
+router.route("/saved/:id").delete(booksController.remove);
 
 router.route("/recipes").get(booksController.findRecipes);
 router.route("/googlebooks").get(booksController.findGoogleBooks);

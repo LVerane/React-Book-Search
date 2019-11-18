@@ -5,7 +5,7 @@ import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 
 import { List, ListItem } from "../components/List";
-import SaveBtn from "../components/SaveBtn";
+import DeleteBtn from "../components/DeleteBtn";
 
 class Saved extends Component {
   state = {
@@ -37,23 +37,33 @@ class Saved extends Component {
   //     .catch(err => console.log(err));
   //   // console.log(req.params.id);
   // }
-
+  deleteBook = id => {
+    console.log(id);
+    API.deleteBook(id)
+      .then(res => {
+        console.log(res);
+        this.loadBooks();
+      })
+      .catch(err => console.log(err));
+  };
   render() {
     return (
       <Container fluid>
         <List>
           {this.state.books.map(book => (
-            <ListItem key={book.tempId}>
+            <ListItem key={book._id}>
               <div>
                 <strong>
-                  {book.title} by {book.authors}
+                  <a href={book.link}>
+                    {book.title} by {book.authors}
+                  </a>
                 </strong>
               </div>
               <img src={book.image} alt={book.title}></img>
               <p>{book.description}</p>
-              <SaveBtn
-                id={book.tempId}
-                onClick={() => this.addBook(book.tempId)}
+              <DeleteBtn
+                id={book._id}
+                onClick={() => this.deleteBook(book._id)}
               />
             </ListItem>
           ))}

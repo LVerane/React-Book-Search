@@ -10,32 +10,31 @@ import { Input, TextArea, FormBtn } from "../components/Form";
 class Books extends Component {
   state = {
     books: [],
-    title: "",
-    authors: ""
+    title: ""
   };
 
-  componentDidMount() {
-    this.loadBooks();
-  }
+  // componentDidMount() {
+  //   this.loadBooks();
+  // }
 
-  loadBooks = () => {
-    API.getBooks()
-      .then(res => {
-        console.log(res.data);
-        this.setState({
-          books: res.data,
-          title: "",
-          authors: ""
-        });
-      })
-      .catch(err => console.log(err));
-  };
+  // loadBooks = () => {
+  //   API.getBooks()
+  //     .then(res => {
+  //       console.log(res.data);
+  //       this.setState({
+  //         books: res.data,
+  //         title: "",
+  //         authors: ""
+  //       });
+  //     })
+  //     .catch(err => console.log(err));
+  // };
 
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
-  };
+  // deleteBook = id => {
+  //   API.deleteBook(id)
+  //     .then(res => this.loadBooks())
+  //     .catch(err => console.log(err));
+  // };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -59,7 +58,10 @@ class Books extends Component {
       // };
       // console.log(test);
     })
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res);
+        alert("book successfully saved");
+      })
       .catch(err => console.log(err));
   };
 
@@ -177,69 +179,71 @@ class Books extends Component {
   render() {
     return (
       <Container fluid>
-        <Row>
-          <Col size="md-6">
-            <Jumbotron>
-              <h1>What Books Should I Read?</h1>
-            </Jumbotron>
-            <form>
-              <Input
-                value={this.state.title}
-                onChange={this.handleInputChange}
-                name="title"
-                placeholder="Title (required)"
-              />
-              <Input
-                value={this.state.authors}
-                onChange={this.handleInputChange}
-                name="authors"
-                placeholder="Authors (required)"
-              />
-              {/* <TextArea
+        <Jumbotron>
+          <h1>Search for a book!</h1>
+        </Jumbotron>
+        <form>
+          <Input
+            value={this.state.title}
+            onChange={this.handleInputChange}
+            name="title"
+            placeholder="Title"
+          />
+          {/* <TextArea
                 value={this.state.description}
                 onChange={this.handleInputChange}
                 name="description"
                 placeholder="description (Optional)"
               /> */}
-              <FormBtn
-                // disabled={!(this.state.authors && this.state.title)}
-                onClick={this.handleFormSubmit}
-              >
-                Submit Book
-              </FormBtn>
-            </form>
-          </Col>
-          <Col size="md-6 sm-12">
-            <Jumbotron>
-              <h1>Books On My List</h1>
-            </Jumbotron>
-            {this.state.books.length ? (
-              <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book.tempId}>
-                    <div>
-                      {/* <Link to={"/books/saved/" + book._id}> */}
-                      <strong>
-                        {book.title} by {book.authors}
-                      </strong>
-                      {/* </Link> */}
-                    </div>
-                    <img src={book.image} alt={book.title}></img>
-                    <p>{book.description}</p>
-                    {/* <DeleteBtn onClick={() => this.deleteBook(book._id)} /> */}
-                    <SaveBtn
-                      id={book.tempId}
-                      // onClick={() => this.setState({ selected: book.tempId })}
-                      onClick={() => this.addBook(book.tempId)}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <h3>No Results to Display</h3>
-            )}
-          </Col>
-        </Row>
+          <FormBtn
+            // disabled={!(this.state.authors && this.state.title)}
+            onClick={this.handleFormSubmit}
+          >
+            Submit Book
+          </FormBtn>
+        </form>
+        {this.state.books.length ? (
+          <List>
+            {this.state.books.map(book => (
+              <ListItem key={book.tempId}>
+                <div>
+                  {/* <Link to={"/books/saved/" + book._id}> */}
+                  <strong>
+                    <a href={book.link}>
+                      {book.title} by {book.authors}
+                    </a>
+                  </strong>
+                  {/* </Link> */}
+                </div>
+                <img src={book.image} alt={book.title}></img>
+                <p>{book.description}</p>
+                {/* <DeleteBtn onClick={() => this.deleteBook(book._id)} /> */}
+                {/* {book.clicked ? (
+                      <SaveBtn
+                        className="btn btn-success"
+                        id={book.tempId}
+                        // onClick={() => this.setState({ selected: book.tempId })}
+                        onClick={() => this.addBook(book.tempId)}
+                      />
+                    ) : (
+                      <SaveBtn
+                        className="btn btn-danger"
+                        id={book.tempId}
+                        // onClick={() => this.setState({ selected: book.tempId })}
+                        onClick={() => this.addBook(book.tempId)}
+                      />
+                    )} */}
+                <SaveBtn
+                  id={book.tempId}
+                  // onClick={() => this.setState({ selected: book.tempId })}
+                  onClick={() => this.addBook(book.tempId)}
+                />
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <h3>No Results to Display</h3>
+        )}
       </Container>
     );
   }
