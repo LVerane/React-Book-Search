@@ -12,7 +12,6 @@ router.route("/saved").get(booksController.findAll); //was findById bfore
 // .put(booksController.update)
 router.route("/saved/:id").delete(booksController.remove);
 
-router.route("/recipes").get(booksController.findRecipes);
 router.route("/googlebooks").get(booksController.findGoogleBooks);
 
 module.exports = router;

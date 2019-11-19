@@ -21,8 +21,7 @@
 }
 
 .list-overflow-container li a {
-  /* color: #2a878c; */
-  color: black;
+  margin-left: 10px;
 }
 
 .list-overflow-container li:first-child {
